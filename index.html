@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Laboratory Equipment Booking System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="domain.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="page-header">
+      <h1>Laboratory Equipment Booking System</h1>
+    </header>
+
+    <main class="sections">
+      <section class="panel" aria-labelledby="student-heading">
+        <h2 id="student-heading">Student</h2>
+        <p id="student-profile"></p>
+
+        <section aria-labelledby="availability-heading">
+          <h3 id="availability-heading">Check availability</h3>
+          <form id="availability-form">
+            <label for="availability-equipment">Equipment</label>
+            <select id="availability-equipment" name="equipment"></select>
+            <button type="submit">Check availability</button>
+          </form>
+          <p id="availability-result" class="result" role="status" aria-live="polite"></p>
+        </section>
+
+        <section aria-labelledby="booking-heading">
+          <h3 id="booking-heading">Book equipment</h3>
+          <form id="booking-form">
+            <label for="booking-equipment">Equipment</label>
+            <select id="booking-equipment" name="equipment"></select>
+
+            <label for="booking-date">Date</label>
+            <input id="booking-date" name="date" type="date" required>
+
+            <label for="booking-start">Start time</label>
+            <input id="booking-start" name="start" type="time" required>
+
+            <label for="booking-end">End time</label>
+            <input id="booking-end" name="end" type="time" required>
+
+            <button type="submit">Create booking</button>
+          </form>
+          <p id="booking-result" class="result" role="status" aria-live="polite"></p>
+        </section>
+
+        <section aria-labelledby="student-bookings-heading">
+          <h3 id="student-bookings-heading">Your bookings</h3>
+          <ul id="student-bookings" class="record-list"></ul>
+          <p id="cancellation-result" class="result" role="status" aria-live="polite"></p>
+        </section>
+      </section>
+
+      <section class="panel" aria-labelledby="administrator-heading">
+        <h2 id="administrator-heading">Administrator</h2>
+        <section aria-labelledby="add-equipment-heading">
+          <h3 id="add-equipment-heading">Add equipment</h3>
+          <form id="add-equipment-form">
+            <label for="equipment-name">Name</label>
+            <input id="equipment-name" name="name" type="text">
+            <button type="submit">Add equipment</button>
+          </form>
+          <p id="add-equipment-result" class="result" role="status" aria-live="polite"></p>
+        </section>
+
+        <section aria-labelledby="equipment-heading">
+          <h3 id="equipment-heading">Equipment status</h3>
+          <ul id="administrator-equipment" class="record-list"></ul>
+          <p id="administrator-result" class="result" role="status" aria-live="polite"></p>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
