@@ -1,117 +1,203 @@
 <mxfile host="Electron">
   <diagram name="Page-1" id="ehrRB03ZPzDQDZjUzIQS">
-    <mxGraphModel dx="1160" dy="649" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1160" dy="649" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1050" pageHeight="1380" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <UserObject label="" plantUmlData="{&#xa;  &quot;data&quot;: &quot;@startuml\nstart\n:Check availability;\nif (Is Equipment available?) then (Yes)\n  :Create booking;\nelse (No)\n  :Booking is not created;\nendif\nstop\n@enduml&quot;,&#xa;  &quot;config&quot;: null&#xa;}" id="sXJwgYS9-K2XKPNzAZ-0-1">
+        <UserObject label="" plantUmlData="{&#xa;  &quot;data&quot;: &quot;@startuml\nstart\nif (Select use case?) then (Check availability)\n  :Check availability;\n  stop\nelseif (Book equipment)\n  :Check availability;\n  if (Is equipment available?) then (Yes)\n    :Create booking;\n  else (No)\n    :Booking is not created;\n  endif\n  stop\nelseif (Cancel booking)\n  :Cancel booking;\n  :Retain booking with status Cancelled;\n  :Equipment changes from Booked to Available;\n  stop\nelse (Administrator)\n  if (Administrator action?) then (Add equipment)\n    :Add equipment;\n    :New equipment starts as Available;\n  elseif (Mark equipment Available)\n    :Mark equipment Available;\n  else (Mark equipment Unavailable)\n    if (Is equipment Booked?) then (Yes)\n      :Reject attempt to mark equipment Unavailable;\n    else (No)\n      :Mark equipment Unavailable;\n    endif\n  endif\nendif\nstop\n@enduml&quot;,&#xa;  &quot;config&quot;: null&#xa;}" id="activity-source">
           <mxCell connectable="0" parent="1" style="group;transparentBounds=1;editIcon=1;lockedGroup=0;groupPadding=10;" vertex="1">
             <mxGeometry as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="" plantUmlId="start_0" plantUmlBaseStyle="ellipse;fillColor=#222222;strokeColor=#222222;" plantUmlBaseValue="" id="sXJwgYS9-K2XKPNzAZ-0-2">
-          <mxCell parent="sXJwgYS9-K2XKPNzAZ-0-1" style="ellipse;fillColor=#222222;strokeColor=#222222;" vertex="1">
-            <mxGeometry height="20" width="20" x="144.5" y="30" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <UserObject label="Check availability" plantUmlId="action_1" plantUmlBaseStyle="rounded=1;absoluteArcSize=1;arcSize=25;fillColor=#F1F1F1;strokeColor=#181818;strokeWidth=0.5;whiteSpace=wrap;fontSize=12;align=left;spacingLeft=6;" plantUmlBaseValue="Check availability" id="sXJwgYS9-K2XKPNzAZ-0-3">
-          <mxCell parent="sXJwgYS9-K2XKPNzAZ-0-1" style="rounded=1;absoluteArcSize=1;arcSize=25;fillColor=#F1F1F1;strokeColor=#181818;strokeWidth=0.5;whiteSpace=wrap;fontSize=12;align=left;spacingLeft=6;" vertex="1">
-            <mxGeometry height="36" width="121" x="94" y="70" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <UserObject label="" plantUmlId="e_2" plantUmlBaseStyle="endArrow=classic;endSize=8;strokeColor=#181818;curved=0;rounded=0;fontSize=11;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" plantUmlBaseValue="" id="sXJwgYS9-K2XKPNzAZ-0-4">
-          <mxCell edge="1" parent="sXJwgYS9-K2XKPNzAZ-0-1" source="sXJwgYS9-K2XKPNzAZ-0-2" style="endArrow=classic;endSize=8;strokeColor=#181818;curved=0;rounded=0;fontSize=11;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" target="sXJwgYS9-K2XKPNzAZ-0-3">
-            <mxGeometry relative="1" as="geometry">
-              <mxPoint x="154.5" y="50" as="sourcePoint" />
-              <mxPoint x="154.5" y="70" as="targetPoint" />
-            </mxGeometry>
-          </mxCell>
-        </UserObject>
-        <UserObject label="Is Equipment available?" plantUmlId="diamond_4" plantUmlBaseStyle="shape=hexagon;perimeter=hexagonPerimeter2;fillColor=#F1F1F1;strokeColor=#181818;whiteSpace=wrap;fontSize=11;" plantUmlBaseValue="Is Equipment available?" id="sXJwgYS9-K2XKPNzAZ-0-5">
-          <mxCell parent="sXJwgYS9-K2XKPNzAZ-0-1" style="shape=hexagon;perimeter=hexagonPerimeter2;fillColor=#F1F1F1;strokeColor=#181818;whiteSpace=wrap;fontSize=11;" vertex="1">
-            <mxGeometry height="28" width="148" x="80.5" y="126" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <UserObject label="" plantUmlId="e_5" plantUmlBaseStyle="endArrow=classic;endSize=8;strokeColor=#181818;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;rounded=0;fontSize=11;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" plantUmlBaseValue="" id="sXJwgYS9-K2XKPNzAZ-0-6">
-          <mxCell edge="1" parent="sXJwgYS9-K2XKPNzAZ-0-1" source="sXJwgYS9-K2XKPNzAZ-0-3" style="endArrow=classic;endSize=8;strokeColor=#181818;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;rounded=0;fontSize=11;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" target="sXJwgYS9-K2XKPNzAZ-0-5">
-            <mxGeometry relative="1" as="geometry">
-              <mxPoint x="154.5" y="106" as="sourcePoint" />
-              <mxPoint x="154.5" y="126" as="targetPoint" />
-            </mxGeometry>
-          </mxCell>
-        </UserObject>
-        <UserObject label="Yes" plantUmlId="e_6" plantUmlBaseStyle="endArrow=classic;endSize=8;strokeColor=#181818;fontSize=11;exitX=0;exitY=0.5;exitDx=0;exitDy=0;curved=0;rounded=0;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" plantUmlBaseValue="Yes" id="sXJwgYS9-K2XKPNzAZ-0-7">
-          <mxCell edge="1" parent="sXJwgYS9-K2XKPNzAZ-0-1" source="sXJwgYS9-K2XKPNzAZ-0-5" style="endArrow=classic;endSize=8;strokeColor=#181818;fontSize=11;exitX=0;exitY=0.5;exitDx=0;exitDy=0;curved=0;rounded=0;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" target="sXJwgYS9-K2XKPNzAZ-0-8">
-            <mxGeometry relative="1" x="-0.895" as="geometry">
-              <Array as="points">
-                <mxPoint x="84.5" y="140" />
-              </Array>
-              <mxPoint x="80.5" y="140" as="sourcePoint" />
-              <mxPoint x="84.5" y="174" as="targetPoint" />
-            </mxGeometry>
-          </mxCell>
-        </UserObject>
-        <UserObject label="Create booking" plantUmlId="action_8" plantUmlBaseStyle="rounded=1;absoluteArcSize=1;arcSize=25;fillColor=#F1F1F1;strokeColor=#181818;strokeWidth=0.5;whiteSpace=wrap;fontSize=12;align=left;spacingLeft=6;" plantUmlBaseValue="Create booking" id="sXJwgYS9-K2XKPNzAZ-0-8">
-          <mxCell parent="sXJwgYS9-K2XKPNzAZ-0-1" style="rounded=1;absoluteArcSize=1;arcSize=25;fillColor=#F1F1F1;strokeColor=#181818;strokeWidth=0.5;whiteSpace=wrap;fontSize=12;align=left;spacingLeft=6;" vertex="1">
-            <mxGeometry height="36" width="109" x="30" y="174" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <UserObject label="No" plantUmlId="e_9" plantUmlBaseStyle="endArrow=classic;endSize=8;strokeColor=#181818;fontSize=11;exitX=1;exitY=0.5;exitDx=0;exitDy=0;curved=0;rounded=0;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" plantUmlBaseValue="No" id="sXJwgYS9-K2XKPNzAZ-0-9">
-          <mxCell edge="1" parent="sXJwgYS9-K2XKPNzAZ-0-1" source="sXJwgYS9-K2XKPNzAZ-0-5" style="endArrow=classic;endSize=8;strokeColor=#181818;fontSize=11;exitX=1;exitY=0.5;exitDx=0;exitDy=0;curved=0;rounded=0;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" target="sXJwgYS9-K2XKPNzAZ-0-10">
-            <mxGeometry relative="1" x="-0.667" as="geometry">
-              <Array as="points">
-                <mxPoint x="245.5" y="140" />
-              </Array>
-              <mxPoint x="228.5" y="140" as="sourcePoint" />
-              <mxPoint x="245.5" y="174" as="targetPoint" />
-            </mxGeometry>
-          </mxCell>
-        </UserObject>
-        <UserObject label="Booking is not created" plantUmlId="action_11" plantUmlBaseStyle="rounded=1;absoluteArcSize=1;arcSize=25;fillColor=#F1F1F1;strokeColor=#181818;strokeWidth=0.5;whiteSpace=wrap;fontSize=12;align=left;spacingLeft=6;" plantUmlBaseValue="Booking is not created" id="sXJwgYS9-K2XKPNzAZ-0-10">
-          <mxCell parent="sXJwgYS9-K2XKPNzAZ-0-1" style="rounded=1;absoluteArcSize=1;arcSize=25;fillColor=#F1F1F1;strokeColor=#181818;strokeWidth=0.5;whiteSpace=wrap;fontSize=12;align=left;spacingLeft=6;" vertex="1">
-            <mxGeometry height="36" width="150" x="170.5" y="174" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <UserObject label="" plantUmlId="merge_12" plantUmlBaseStyle="rhombus;fillColor=#F1F1F1;strokeColor=#181818;" plantUmlBaseValue="" id="sXJwgYS9-K2XKPNzAZ-0-11">
-          <mxCell parent="sXJwgYS9-K2XKPNzAZ-0-1" style="rhombus;fillColor=#F1F1F1;strokeColor=#181818;" vertex="1">
-            <mxGeometry height="24" width="24" x="142.5" y="230" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <UserObject label="" plantUmlId="e_13" plantUmlBaseStyle="endArrow=classic;endSize=8;strokeColor=#181818;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;rounded=0;fontSize=11;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" plantUmlBaseValue="" id="sXJwgYS9-K2XKPNzAZ-0-12">
-          <mxCell edge="1" parent="sXJwgYS9-K2XKPNzAZ-0-1" source="sXJwgYS9-K2XKPNzAZ-0-8" style="endArrow=classic;endSize=8;strokeColor=#181818;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;rounded=0;fontSize=11;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" target="sXJwgYS9-K2XKPNzAZ-0-11">
-            <mxGeometry relative="1" as="geometry">
-              <Array as="points">
-                <mxPoint x="84.5" y="242" />
-              </Array>
-              <mxPoint x="84.5" y="210" as="sourcePoint" />
-              <mxPoint x="142.5" y="242" as="targetPoint" />
-            </mxGeometry>
-          </mxCell>
-        </UserObject>
-        <UserObject label="" plantUmlId="e_15" plantUmlBaseStyle="endArrow=classic;endSize=8;strokeColor=#181818;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;rounded=0;fontSize=11;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" plantUmlBaseValue="" id="sXJwgYS9-K2XKPNzAZ-0-13">
-          <mxCell edge="1" parent="sXJwgYS9-K2XKPNzAZ-0-1" source="sXJwgYS9-K2XKPNzAZ-0-10" style="endArrow=classic;endSize=8;strokeColor=#181818;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;rounded=0;fontSize=11;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" target="sXJwgYS9-K2XKPNzAZ-0-11">
-            <mxGeometry relative="1" as="geometry">
-              <Array as="points">
-                <mxPoint x="245.5" y="242" />
-              </Array>
-              <mxPoint x="245.5" y="210" as="sourcePoint" />
-              <mxPoint x="166.5" y="242" as="targetPoint" />
-            </mxGeometry>
-          </mxCell>
-        </UserObject>
-        <UserObject label="" plantUmlId="stop_17" plantUmlBaseStyle="ellipse;shape=endState;fillColor=#222222;strokeColor=#222222;" plantUmlBaseValue="" id="sXJwgYS9-K2XKPNzAZ-0-14">
-          <mxCell parent="sXJwgYS9-K2XKPNzAZ-0-1" style="ellipse;shape=endState;fillColor=#222222;strokeColor=#222222;" vertex="1">
-            <mxGeometry height="24" width="24" x="142.5" y="274" as="geometry" />
-          </mxCell>
-        </UserObject>
-        <UserObject label="" plantUmlId="e_18" plantUmlBaseStyle="endArrow=classic;endSize=8;strokeColor=#181818;exitX=0.5;exitY=1;exitDx=0;exitDy=0;curved=0;rounded=0;fontSize=11;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" plantUmlBaseValue="" id="sXJwgYS9-K2XKPNzAZ-0-15">
-          <mxCell edge="1" parent="sXJwgYS9-K2XKPNzAZ-0-1" source="sXJwgYS9-K2XKPNzAZ-0-11" style="endArrow=classic;endSize=8;strokeColor=#181818;exitX=0.5;exitY=1;exitDx=0;exitDy=0;curved=0;rounded=0;fontSize=11;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" target="sXJwgYS9-K2XKPNzAZ-0-14">
-            <mxGeometry relative="1" as="geometry">
-              <mxPoint x="154.5" y="254" as="sourcePoint" />
-              <mxPoint x="154.5" y="274" as="targetPoint" />
-            </mxGeometry>
-          </mxCell>
-        </UserObject>
+        <mxCell id="section-check" value="Student - Check availability" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="360" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="check-frame" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#A6A6A6;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="60" width="950" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="check-start" value="" style="ellipse;fillColor=#222222;strokeColor=#222222;" vertex="1" parent="1">
+          <mxGeometry x="90" y="106" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="check-action" value="Check availability" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F1F1;strokeColor=#181818;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="180" y="92" width="180" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="check-end" value="" style="ellipse;shape=endState;fillColor=#222222;strokeColor=#222222;" vertex="1" parent="1">
+          <mxGeometry x="430" y="104" width="24" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="check-e1" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;orthogonalLoop=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="check-start" target="check-action">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="check-e2" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;orthogonalLoop=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="check-action" target="check-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="section-book" value="Student - Book equipment" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="40" y="200" width="360" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="book-frame" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#A6A6A6;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="230" width="950" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="book-start" value="" style="ellipse;fillColor=#222222;strokeColor=#222222;" vertex="1" parent="1">
+          <mxGeometry x="65" y="346" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="book-check" value="Check availability" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F1F1;strokeColor=#181818;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="115" y="332" width="175" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="book-decision" value="Is equipment&#xa;available?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#F1F1F1;strokeColor=#181818;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="355" y="320" width="140" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="book-create" value="Create booking" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F1F1;strokeColor=#181818;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="615" y="275" width="190" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="book-none" value="Booking is not created" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F1F1;strokeColor=#181818;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="615" y="386" width="190" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="book-end-yes" value="" style="ellipse;shape=endState;fillColor=#222222;strokeColor=#222222;" vertex="1" parent="1">
+          <mxGeometry x="875" y="287" width="24" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="book-end-no" value="" style="ellipse;shape=endState;fillColor=#222222;strokeColor=#222222;" vertex="1" parent="1">
+          <mxGeometry x="875" y="398" width="24" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="book-e1" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="book-start" target="book-check">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="book-e2" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="book-check" target="book-decision">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="book-e3" value="Yes" style="endArrow=classic;endSize=8;strokeColor=#181818;fontSize=12;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="book-decision" target="book-create">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="book-e4" value="No" style="endArrow=classic;endSize=8;strokeColor=#181818;fontSize=12;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="book-decision" target="book-none">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="book-e5" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="book-create" target="book-end-yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="book-e6" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="book-none" target="book-end-no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="section-cancel" value="Student - Cancel booking" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="40" y="510" width="360" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel-frame" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#A6A6A6;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="540" width="950" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel-start" value="" style="ellipse;fillColor=#222222;strokeColor=#222222;" vertex="1" parent="1">
+          <mxGeometry x="65" y="603" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel-action" value="Cancel booking" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F1F1;strokeColor=#181818;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="115" y="589" width="155" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel-retain" value="Retain booking&#xa;with status Cancelled" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F1F1;strokeColor=#181818;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="345" y="589" width="205" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel-available" value="Equipment changes&#xa;from Booked to Available" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F1F1;strokeColor=#181818;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="625" y="589" width="230" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel-end" value="" style="ellipse;shape=endState;fillColor=#222222;strokeColor=#222222;" vertex="1" parent="1">
+          <mxGeometry x="900" y="601" width="24" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel-e1" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="cancel-start" target="cancel-action">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel-e2" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="cancel-action" target="cancel-retain">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel-e3" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="cancel-retain" target="cancel-available">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel-e4" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="cancel-available" target="cancel-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="section-admin" value="Administrator" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="40" y="710" width="360" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-frame" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#A6A6A6;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="740" width="950" height="570" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-add-label" value="Add equipment" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=13;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="55" y="755" width="220" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-add-start" value="" style="ellipse;fillColor=#222222;strokeColor=#222222;" vertex="1" parent="1">
+          <mxGeometry x="65" y="800" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-add" value="Add equipment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F1F1;strokeColor=#181818;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="155" y="786" width="180" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-new-available" value="New equipment starts&#xa;as Available" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F1F1;strokeColor=#181818;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="415" y="786" width="210" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-add-end" value="" style="ellipse;shape=endState;fillColor=#222222;strokeColor=#222222;" vertex="1" parent="1">
+          <mxGeometry x="700" y="798" width="24" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-add-e1" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="admin-add-start" target="admin-add">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-add-e2" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="admin-add" target="admin-new-available">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-add-e3" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="admin-new-available" target="admin-add-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-available-label" value="Mark equipment available" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=13;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="55" y="860" width="250" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-available-start" value="" style="ellipse;fillColor=#222222;strokeColor=#222222;" vertex="1" parent="1">
+          <mxGeometry x="65" y="905" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-available" value="Mark equipment Available" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F1F1;strokeColor=#181818;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="155" y="891" width="210" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-available-end" value="" style="ellipse;shape=endState;fillColor=#222222;strokeColor=#222222;" vertex="1" parent="1">
+          <mxGeometry x="445" y="903" width="24" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-available-e1" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="admin-available-start" target="admin-available">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-available-e2" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="admin-available" target="admin-available-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-unavailable-label" value="Mark equipment unavailable" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=13;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="55" y="970" width="260" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-unavailable-start" value="" style="ellipse;fillColor=#222222;strokeColor=#222222;" vertex="1" parent="1">
+          <mxGeometry x="65" y="1065" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-is-booked" value="Is equipment&#xa;Booked?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#F1F1F1;strokeColor=#181818;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1040" width="140" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-mark-unavailable" value="Mark equipment&#xa;Unavailable" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F1F1;strokeColor=#181818;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="520" y="1005" width="200" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-reject" value="Reject attempt to mark&#xa;equipment Unavailable" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F1F1;strokeColor=#181818;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="520" y="1115" width="220" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-unavailable-end" value="" style="ellipse;shape=endState;fillColor=#222222;strokeColor=#222222;" vertex="1" parent="1">
+          <mxGeometry x="825" y="1017" width="24" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-reject-end" value="" style="ellipse;shape=endState;fillColor=#222222;strokeColor=#222222;" vertex="1" parent="1">
+          <mxGeometry x="825" y="1127" width="24" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-unavailable-e1" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="admin-unavailable-start" target="admin-is-booked">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-unavailable-e2" value="No" style="endArrow=classic;endSize=8;strokeColor=#181818;fontSize=12;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="admin-is-booked" target="admin-mark-unavailable">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-unavailable-e3" value="Yes" style="endArrow=classic;endSize=8;strokeColor=#181818;fontSize=12;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="admin-is-booked" target="admin-reject">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-unavailable-e4" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="admin-mark-unavailable" target="admin-unavailable-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-unavailable-e5" value="" style="endArrow=classic;endSize=8;strokeColor=#181818;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="admin-reject" target="admin-reject-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
