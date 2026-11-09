@@ -128,6 +128,13 @@ const irButtonLedStates = {
   "0XA15EFF00": { red: false, yellow: false, green: true },
 };
 
+const bookingLedCommands = {
+  Available: "LED GREEN\n",
+  Booked: "LED RED\n",
+  Borrowed: "LED RED\n",
+  Unavailable: "LED RED\n",
+};
+
 const storage = {
   database: null,
   async open() {
@@ -529,9 +536,38 @@ async function connectArduino() {
     updateSerialControls(true);
     document.querySelector("#arduino-connection").textContent = "Arduino Mega: Connected";
     addHardwareEvent("Arduino connected");
+    serialState.writer = serialState.port.writable
+      ? serialState.port.writable.getWriter()
+      : null;
     serialState.reader = serialState.port.readable.getReader();
     readSerial();
   }
+
+async function sendBookingLedStatus(equipment) {
+  const writer = serialState.writer;
+  console.log("[LED sync] booking equipment status:", equipment.status);
+  console.log("[LED sync] Web Serial writer available:", Boolean(writer));
+  if (!writer) {
+    console.log("[LED sync] command not sent: no Web Serial writer is available.");
+    return;
+  }
+
+  const command = bookingLedCommands[equipment.status];
+  if (!command) {
+    console.log("[LED sync] command not sent: unsupported status.", equipment.status);
+    return;
+  }
+
+  console.log("[LED sync] sending command:", JSON.stringify(command));
+  try {
+    await writer.ready;
+    await writer.write(new TextEncoder().encode(command));
+    await writer.ready;
+    console.log("[LED sync] command sent successfully:", JSON.stringify(command));
+  } catch (error) {
+    console.error("[LED sync] command failed:", error);
+  }
+}
 
   function updateSerialControls(connected) {
     document.querySelector("#connect-arduino").disabled = connected;
@@ -743,7 +779,10 @@ bookingForm.addEventListener("submit", (event) => {
     ? `Booking ${result.booking.bookingId} created with status Active.`
     : messages[result.error];
   if (result.booking) {
+    console.log("[LED sync] booking created:", result.booking.bookingId);
+    console.log("[LED sync] associated book status:", result.booking.equipment.status);
     bookingStorage.save();
+    sendBookingLedStatus(result.booking.equipment);
   }
   renderEquipment();
   renderBookings();
