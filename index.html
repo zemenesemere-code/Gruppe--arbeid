@@ -109,30 +109,6 @@
           <p id="administrator-result" class="result" role="status" aria-live="polite"></p>
         </section>
 
-        <section aria-labelledby="library-heading">
-          <h3 id="library-heading">Library management</h3>
-          <form id="add-book-form">
-            <label for="book-name">Book name</label>
-            <input id="book-name" name="name" type="text" required>
-            <button type="submit">Add book</button>
-          </form>
-          <p id="book-management-result" class="result" role="status" aria-live="polite"></p>
-          <ul id="book-list" class="record-list"></ul>
-          <form id="library-operation-form">
-            <label for="book-selection">Book</label>
-            <select id="book-selection" name="book"></select>
-            <label for="library-operation">Operation</label>
-            <select id="library-operation" name="operation">
-              <option value="Borrow">Borrow</option>
-              <option value="Return">Return</option>
-            </select>
-            <button type="submit">Complete operation</button>
-          </form>
-          <p id="library-operation-result" class="result" role="status" aria-live="polite"></p>
-          <h4>Operation history</h4>
-          <ul id="operation-history" class="record-list"></ul>
-        </section>
-
         <section aria-labelledby="tests-heading">
           <h3 id="tests-heading">Unit tests</h3>
           <button id="run-tests" type="button">Test</button>

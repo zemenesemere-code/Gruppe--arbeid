@@ -129,10 +129,10 @@ const irButtonLedStates = {
 };
 
 const bookingLedCommands = {
-  Available: "LED GREEN\n",
-  Booked: "LED RED\n",
+  Available: "LED RED\n",
+  Booked: "LED YELLOW\n",
   Borrowed: "LED RED\n",
-  Unavailable: "LED RED\n",
+  Unavailable: "LED GREEN\n",
 };
 
 const storage = {
@@ -543,18 +543,18 @@ async function connectArduino() {
     readSerial();
   }
 
-async function sendBookingLedStatus(equipment) {
+async function sendBookingLedStatus(equipment, statusOverride = equipment.status) {
   const writer = serialState.writer;
-  console.log("[LED sync] booking equipment status:", equipment.status);
+  console.log("[LED sync] booking equipment status:", statusOverride);
   console.log("[LED sync] Web Serial writer available:", Boolean(writer));
   if (!writer) {
     console.log("[LED sync] command not sent: no Web Serial writer is available.");
     return;
   }
 
-  const command = bookingLedCommands[equipment.status];
+  const command = bookingLedCommands[statusOverride];
   if (!command) {
-    console.log("[LED sync] command not sent: unsupported status.", equipment.status);
+    console.log("[LED sync] command not sent: unsupported status.", statusOverride);
     return;
   }
 
@@ -566,6 +566,40 @@ async function sendBookingLedStatus(equipment) {
     console.log("[LED sync] command sent successfully:", JSON.stringify(command));
   } catch (error) {
     console.error("[LED sync] command failed:", error);
+  }
+}
+
+function availabilityLedCommand(status) {
+  return {
+    Available: "LED RED\n",
+    Booked: "LED YELLOW\n",
+    Borrowed: "LED YELLOW\n",
+    Unavailable: "LED GREEN\n",
+  }[status];
+}
+
+async function sendAvailabilityLedStatus(status) {
+  const writer = serialState.writer;
+  const command = availabilityLedCommand(status);
+  console.log("[LED availability] book status:", status);
+  console.log("[LED availability] exact command:", JSON.stringify(command));
+  if (!writer) {
+    console.log("[LED availability] command not sent: no Web Serial writer is available.");
+    return;
+  }
+  if (!command) {
+    console.log("[LED availability] command not sent: unsupported status.", status);
+    return;
+  }
+
+  console.log("[LED availability] sending command:", JSON.stringify(command));
+  try {
+    await writer.ready;
+    await writer.write(new TextEncoder().encode(command));
+    await writer.ready;
+    console.log("[LED availability] command sent successfully:", JSON.stringify(command));
+  } catch (error) {
+    console.error("[LED availability] command failed:", error);
   }
 }
 
@@ -651,6 +685,9 @@ async function sendBookingLedStatus(equipment) {
 function renderLibrary() {
     const books = document.querySelector("#book-list");
     const selection = document.querySelector("#book-selection");
+    if (!books || !selection) {
+      return;
+    }
     books.replaceChildren();
     selection.replaceChildren();
     for (const book of library.books) {
@@ -691,7 +728,7 @@ function renderLibrary() {
   }
 }
 
-addBookForm.addEventListener("submit", (event) => {
+if (addBookForm) addBookForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const result = library.addBook(new FormData(addBookForm).get("name"));
   const output = document.querySelector("#book-management-result");
@@ -706,7 +743,8 @@ addBookForm.addEventListener("submit", (event) => {
   renderLibrary();
 });
 
-document.querySelector("#book-list").addEventListener("click", (event) => {
+const bookList = document.querySelector("#book-list");
+if (bookList) bookList.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-action]");
   if (!button) return;
 
@@ -741,7 +779,7 @@ document.querySelector("#book-list").addEventListener("click", (event) => {
   }
 });
 
-availabilityForm.addEventListener("submit", (event) => {
+availabilityForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const equipment = system.equipment.find(
     (item) => item.equipmentId === availabilityEquipment.value,
@@ -752,14 +790,20 @@ availabilityForm.addEventListener("submit", (event) => {
     return;
   }
 
-  result.textContent = equipment.checkAvailability()
+  const isAvailable = equipment.checkAvailability();
+  const status = isAvailable ? "Available" : equipment.status;
+  result.textContent = isAvailable
     ? `${equipment.navn} is Available.`
     : `${equipment.navn} is ${equipment.status}, so it is not available.`;
+  await sendAvailabilityLedStatus(status);
 });
 
 bookingForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const fields = new FormData(bookingForm);
+  const selectedEquipment = system.equipment.find(
+    (item) => item.equipmentId === fields.get("equipment"),
+  );
   const result = system.createBooking(
     fields.get("equipment"),
     fields.get("date"),
@@ -783,6 +827,8 @@ bookingForm.addEventListener("submit", (event) => {
     console.log("[LED sync] associated book status:", result.booking.equipment.status);
     bookingStorage.save();
     sendBookingLedStatus(result.booking.equipment);
+  } else if (result.error === "unavailable" && selectedEquipment) {
+    sendBookingLedStatus(selectedEquipment, "Unavailable");
   }
   renderEquipment();
   renderBookings();
@@ -880,7 +926,8 @@ if ("serial" in navigator) {
   navigator.serial.addEventListener("disconnect", handleSerialDisconnect);
 }
 
-document.querySelector("#library-operation-form").addEventListener("submit", (event) => {
+const libraryOperationForm = document.querySelector("#library-operation-form");
+if (libraryOperationForm) libraryOperationForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const fields = new FormData(event.currentTarget);
   const bookId = fields.get("book");
