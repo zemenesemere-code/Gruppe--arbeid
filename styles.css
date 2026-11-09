@@ -83,12 +83,159 @@ button:hover {
   min-height: 1.5rem;
 }
 
+.presence-status {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.presence-indicator {
+  flex: 0 0 auto;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: #8a939c;
+}
+
+.presence-indicator.online {
+  background: #43a047;
+  box-shadow: 0 0 0.45rem #43a047;
+  animation: presence-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes presence-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0.25rem #43a047;
+    opacity: 0.75;
+  }
+  50% {
+    box-shadow: 0 0 0.7rem #43a047;
+    opacity: 1;
+  }
+}
+
 .record-list {
   padding-left: 1.25rem;
 }
 
 .record-list li + li {
   margin-top: 0.75rem;
+}
+
+.traffic-light-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.traffic-light {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border: 1px solid #202124;
+  border-radius: 1.25rem;
+  background: #202124;
+}
+
+.traffic-light__bulb {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #4d5660;
+  border-radius: 50%;
+  background: #39434d;
+}
+
+.traffic-light__bulb--red.active {
+  background: #e53935;
+  box-shadow: 0 0 0.7rem #e53935;
+  animation: traffic-light-glow-red 1.2s ease-in-out infinite alternate;
+}
+
+.traffic-light__bulb--yellow.active {
+  background: #fbc02d;
+  box-shadow: 0 0 0.7rem #fbc02d;
+  animation: traffic-light-glow-yellow 1.2s ease-in-out infinite alternate;
+}
+
+.traffic-light__bulb--green.active {
+  background: #43a047;
+  box-shadow: 0 0 0.7rem #43a047;
+  animation: traffic-light-glow-green 1.2s ease-in-out infinite alternate;
+}
+
+.buzz-indicator {
+  position: relative;
+  display: flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  color: #4d5660;
+}
+
+.buzz-indicator__speaker {
+  font-size: 1.7rem;
+  line-height: 1;
+  filter: grayscale(1);
+}
+
+.buzz-indicator.active .buzz-indicator__speaker {
+  filter: none;
+  animation: buzz-pulse 0.8s ease-in-out infinite;
+}
+
+.buzz-indicator__wave {
+  position: absolute;
+  width: 0.7rem;
+  height: 1.4rem;
+  border: 2px solid currentColor;
+  border-left: 0;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 0 50% 50% 0;
+  opacity: 0;
+}
+
+.buzz-indicator.active .buzz-indicator__wave {
+  animation: buzz-wave 0.8s ease-out infinite;
+}
+
+.buzz-indicator__wave--one {
+  right: 0.2rem;
+}
+
+.buzz-indicator__wave--two {
+  right: -0.3rem;
+  height: 2rem;
+  animation-delay: 0.2s !important;
+}
+
+@keyframes buzz-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+@keyframes buzz-wave {
+  0% { opacity: 0; transform: scale(0.8); }
+  40%, 70% { opacity: 0.8; }
+  100% { opacity: 0; transform: scale(1.1); }
+}
+
+@keyframes traffic-light-glow-red {
+  from { box-shadow: 0 0 0.45rem #e53935; }
+  to { box-shadow: 0 0 1rem #e53935; }
+}
+
+@keyframes traffic-light-glow-yellow {
+  from { box-shadow: 0 0 0.45rem #fbc02d; }
+  to { box-shadow: 0 0 1rem #fbc02d; }
+}
+
+@keyframes traffic-light-glow-green {
+  from { box-shadow: 0 0 0.45rem #43a047; }
+  to { box-shadow: 0 0 1rem #43a047; }
 }
 
 .record-row {

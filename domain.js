@@ -12,6 +12,11 @@
     CANCELLED: "Cancelled",
   });
 
+  const LibraryOperation = Object.freeze({
+    BORROW: "Borrow",
+    RETURN: "Return",
+  });
+
   function localCalendarDate(date = new Date()) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -118,9 +123,12 @@
     }
 
     cancelBooking() {
+      const equipmentIsBooked =
+        this.equipment.status === EquipmentStatus.BOOKED ||
+        this.equipment.status === "Borrowed";
       if (
         this.status !== BookingStatus.ACTIVE ||
-        this.equipment.status !== EquipmentStatus.BOOKED
+        !equipmentIsBooked
       ) {
         return false;
       }
@@ -199,6 +207,119 @@
     }
   }
 
+  class LibraryBook {
+    constructor(bookId, name) {
+      this.bookId = bookId;
+      this.name = name;
+      this.status = "Available";
+    }
+
+    get equipmentId() {
+      return this.bookId;
+    }
+
+    get navn() {
+      return this.name;
+    }
+
+    checkAvailability() {
+      return this.status === "Available";
+    }
+
+    markBooked() {
+      if (!this.checkAvailability()) return false;
+      this.status = "Borrowed";
+      return true;
+    }
+
+    markUnavailable() {
+      if (this.status !== "Available") return false;
+      this.status = "Unavailable";
+      return true;
+    }
+
+    markAvailable() {
+      if (this.status !== "Borrowed" && this.status !== "Unavailable") return false;
+      this.status = "Available";
+      return true;
+    }
+  }
+
+  class LibrarySystem {
+    constructor() {
+      this.books = [
+        new LibraryBook("B1", "Arduino Fundamentals", null),
+        new LibraryBook("B2", "Embedded Systems Lab", null),
+        new LibraryBook("B3", "RFID Applications"),
+      ];
+      this.operations = [];
+      this.bookSequence = this.books.length + 1;
+    }
+
+    findBook(bookId) {
+      return this.books.find((book) => book.bookId === bookId) || null;
+    }
+
+    nextBookId() {
+      const id = `B${this.bookSequence}`;
+      this.bookSequence += 1;
+      return id;
+    }
+
+    addBook(name) {
+      const trimmedName = String(name || "").trim();
+      if (!trimmedName) {
+        return { book: null, error: "name" };
+      }
+
+      const book = new LibraryBook(this.nextBookId(), trimmedName, null);
+      this.books.push(book);
+      return { book, error: null };
+    }
+
+    editBook(bookId, name) {
+      const book = this.findBook(bookId);
+      const trimmedName = String(name || "").trim();
+      if (!book) return { book: null, error: "book" };
+      if (!trimmedName) return { book: null, error: "name" };
+
+      book.name = trimmedName;
+      return { book, error: null };
+    }
+
+    deleteBook(bookId) {
+      const book = this.findBook(bookId);
+      if (!book) return { success: false, error: "book" };
+      if (book.status === "Borrowed") {
+        return { success: false, error: "borrowed" };
+      }
+
+      this.books = this.books.filter((item) => item.bookId !== bookId);
+      return { success: true };
+    }
+
+    completeOperation(bookId, operation, administrator = "Administrator", date = new Date()) {
+      const book = this.findBook(bookId);
+      if (!book) return { success: false, error: "book" };
+      if (operation === LibraryOperation.BORROW && book.status !== "Available") {
+        return { success: false, error: "already-borrowed" };
+      }
+      if (operation === LibraryOperation.RETURN && book.status !== "Borrowed") {
+        return { success: false, error: "already-available" };
+      }
+      book.status = operation === LibraryOperation.BORROW ? "Borrowed" : "Available";
+      const record = {
+        bookId: book.bookId,
+        bookName: book.name,
+        operation,
+        administratorUid: administrator,
+        timestamp: date.toISOString(),
+      };
+      this.operations.push(record);
+      return { success: true, record };
+    }
+  }
+
   global.BookingDomain = Object.freeze({
     Administrator,
     Booking,
@@ -206,6 +327,9 @@
     BookingSystem,
     Equipment,
     EquipmentStatus,
+    LibraryBook,
+    LibraryOperation,
+    LibrarySystem,
     Student,
     getBookingError,
     localCalendarDate,

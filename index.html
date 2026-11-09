@@ -14,6 +14,41 @@
     </header>
 
     <main class="sections">
+      <section class="panel" aria-labelledby="dashboard-heading">
+        <h2 id="dashboard-heading">Arduino Dashboard</h2>
+        <p id="arduino-connection" class="result" role="status">Arduino Mega: Disconnected</p>
+        <button id="connect-arduino" type="button">Connect Arduino</button>
+        <button id="disconnect-arduino" type="button" disabled>Disconnect Arduino</button>
+        <h3>Traffic light</h3>
+        <div class="traffic-light-display">
+          <ul id="traffic-light-status" class="record-list"></ul>
+          <div class="traffic-light" aria-label="Virtual traffic light">
+            <span id="virtual-red-light" class="traffic-light__bulb traffic-light__bulb--red"></span>
+            <span id="virtual-yellow-light" class="traffic-light__bulb traffic-light__bulb--yellow"></span>
+            <span id="virtual-green-light" class="traffic-light__bulb traffic-light__bulb--green"></span>
+          </div>
+          <div id="buzz-indicator" class="buzz-indicator" role="img" aria-label="Buzz inactive">
+            <span class="buzz-indicator__speaker" aria-hidden="true">🔊</span>
+            <span class="buzz-indicator__wave buzz-indicator__wave--one" aria-hidden="true"></span>
+            <span class="buzz-indicator__wave buzz-indicator__wave--two" aria-hidden="true"></span>
+          </div>
+        </div>
+        <h3>HC-SR04 presence</h3>
+        <p class="presence-status">
+          <span id="presence-indicator" class="presence-indicator" aria-hidden="true"></span>
+          <span id="presence-status" class="result" role="status">Admin Offline — no measurement received.</span>
+        </p>
+        <p id="distance-status" class="result">Distance: no measurement received.</p>
+        <h3>Weather / Temperature</h3>
+        <p id="temperature-status" class="result">Waiting for sensor data...</p>
+        <p id="humidity-status" class="result">Waiting for sensor data...</p>
+        <h3>IR receiver</h3>
+        <p id="ir-status" class="result">No IR signal received.</p>
+        <p id="ir-response-time" class="result">Response Time: -- ms</p>
+        <h3>Event log</h3>
+        <ul id="hardware-events" class="record-list"></ul>
+      </section>
+
       <section class="panel" aria-labelledby="student-heading">
         <h2 id="student-heading">Student</h2>
         <p id="student-profile"></p>
@@ -51,6 +86,7 @@
         <section aria-labelledby="student-bookings-heading">
           <h3 id="student-bookings-heading">Your bookings</h3>
           <ul id="student-bookings" class="record-list"></ul>
+          <button id="clear-bookings" type="button">Clear bookings</button>
           <p id="cancellation-result" class="result" role="status" aria-live="polite"></p>
         </section>
       </section>
@@ -71,6 +107,39 @@
           <h3 id="equipment-heading">Equipment status</h3>
           <ul id="administrator-equipment" class="record-list"></ul>
           <p id="administrator-result" class="result" role="status" aria-live="polite"></p>
+        </section>
+
+        <section aria-labelledby="library-heading">
+          <h3 id="library-heading">Library management</h3>
+          <form id="add-book-form">
+            <label for="book-name">Book name</label>
+            <input id="book-name" name="name" type="text" required>
+            <button type="submit">Add book</button>
+          </form>
+          <p id="book-management-result" class="result" role="status" aria-live="polite"></p>
+          <ul id="book-list" class="record-list"></ul>
+          <form id="library-operation-form">
+            <label for="book-selection">Book</label>
+            <select id="book-selection" name="book"></select>
+            <label for="library-operation">Operation</label>
+            <select id="library-operation" name="operation">
+              <option value="Borrow">Borrow</option>
+              <option value="Return">Return</option>
+            </select>
+            <button type="submit">Complete operation</button>
+          </form>
+          <p id="library-operation-result" class="result" role="status" aria-live="polite"></p>
+          <h4>Operation history</h4>
+          <ul id="operation-history" class="record-list"></ul>
+        </section>
+
+        <section aria-labelledby="tests-heading">
+          <h3 id="tests-heading">Unit tests</h3>
+          <button id="run-tests" type="button">Test</button>
+          <p id="test-summary" class="result" role="status" aria-live="polite">
+            Tests have not been run.
+          </p>
+          <ul id="test-results" class="record-list"></ul>
         </section>
       </section>
     </main>

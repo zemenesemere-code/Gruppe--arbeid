@@ -4,7 +4,9 @@ This is a static, browser-based mock-up implemented with plain HTML, CSS, and Ja
 
 ## Run locally
 
-Open `index.html` in a browser. The application keeps Equipment and Bookings in memory for the current page session; reloading the page restores the fixed sample Student and Available Equipment.
+Open `index.html` in a browser. Equipment and Bookings are stored in the
+browser's localStorage and restored when the page is reloaded. The fixed sample
+Student remains available for the booking workflow.
 
 ## Run domain tests
 

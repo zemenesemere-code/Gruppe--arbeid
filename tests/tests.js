@@ -160,6 +160,18 @@ test("cancellation retains the booking and returns Booked equipment to Available
   assertEqual(booking.equipment.status, BookingDomain.EquipmentStatus.AVAILABLE);
 });
 
+test("cancellation returns a booked library book to Available", () => {
+  const system = new BookingDomain.BookingSystem();
+  const book = new BookingDomain.LibraryBook("B1", "Arduino Fundamentals");
+  system.equipment.push(book);
+  const { booking } = system.createBooking("B1", tomorrow(), "09:00", "10:00");
+  assertEqual(booking.status, BookingDomain.BookingStatus.ACTIVE);
+  assertEqual(book.status, "Borrowed");
+  assertEqual(booking.cancelBooking(), true);
+  assertEqual(booking.status, BookingDomain.BookingStatus.CANCELLED);
+  assertEqual(book.status, "Available");
+});
+
 test("repeated cancellation is rejected without changing state", () => {
   const system = new BookingDomain.BookingSystem();
   const { booking } = system.createBooking("E1", tomorrow(), "09:00", "10:00");
@@ -183,6 +195,79 @@ test("Administrator cannot mark Booked equipment Available", () => {
   equipment.markBooked();
   assertEqual(system.markEquipmentAvailableAsAdministrator(equipment), false);
   assertEqual(equipment.status, BookingDomain.EquipmentStatus.BOOKED);
+});
+
+test("direct borrow completes and records operation", () => {
+  const system = new BookingDomain.LibrarySystem();
+  const result = system.completeOperation("B1", BookingDomain.LibraryOperation.BORROW);
+  assertEqual(result.success, true);
+  assertEqual(system.findBook("B1").status, "Borrowed");
+  assertEqual(system.operations.length, 1);
+});
+
+test("rejected operation does not change book status", () => {
+  const system = new BookingDomain.LibrarySystem();
+  system.completeOperation("B1", BookingDomain.LibraryOperation.BORROW);
+  const result = system.completeOperation("B1", BookingDomain.LibraryOperation.BORROW);
+  assertEqual(result.error, "already-borrowed");
+  assertEqual(system.findBook("B1").status, "Borrowed");
+});
+
+test("books can be added with sequential IDs and Available status", () => {
+  const system = new BookingDomain.LibrarySystem();
+  const result = system.addBook("Control Systems");
+  assertEqual(result.error, null);
+  assertEqual(result.book.bookId, "B4");
+  assertEqual(result.book.status, "Available");
+});
+
+test("editing a book preserves its ID and status", () => {
+  const system = new BookingDomain.LibrarySystem();
+  system.completeOperation("B1", BookingDomain.LibraryOperation.BORROW);
+  const result = system.editBook("B1", "Updated Fundamentals");
+  assertEqual(result.error, null);
+  assertEqual(result.book.bookId, "B1");
+  assertEqual(result.book.name, "Updated Fundamentals");
+  assertEqual(result.book.status, "Borrowed");
+});
+
+test("borrowed books cannot be deleted", () => {
+  const system = new BookingDomain.LibrarySystem();
+  system.completeOperation("B1", BookingDomain.LibraryOperation.BORROW);
+  const result = system.deleteBook("B1");
+  assertEqual(result.success, false);
+  assertEqual(result.error, "borrowed");
+  assertEqual(system.findBook("B1").status, "Borrowed");
+});
+
+test("available books can be deleted", () => {
+  const system = new BookingDomain.LibrarySystem();
+  const result = system.deleteBook("B1");
+  assertEqual(result.success, true);
+  assertEqual(system.findBook("B1"), null);
+});
+
+test("book IDs are not reused after deletion", () => {
+  const system = new BookingDomain.LibrarySystem();
+  system.deleteBook("B3");
+  assertEqual(system.addBook("New Book").book.bookId, "B4");
+});
+
+test("book cannot be borrowed twice or returned while available", () => {
+  const system = new BookingDomain.LibrarySystem();
+  assertEqual(system.completeOperation("B1", "Borrow").success, true);
+  assertEqual(system.completeOperation("B1", "Borrow").error, "already-borrowed");
+  assertEqual(system.completeOperation("B2", "Return").error, "already-available");
+});
+
+test("library books expose shared equipment availability behavior", () => {
+  const book = new BookingDomain.LibraryBook("B9", "Shared Book");
+  assertEqual(book.equipmentId, "B9");
+  assertEqual(book.navn, "Shared Book");
+  assertEqual(book.checkAvailability(), true);
+  assertEqual(book.markBooked(), true);
+  assertEqual(book.checkAvailability(), false);
+  assertEqual(book.markAvailable(), true);
 });
 
 summary.textContent = `${passed} passed, ${failed} failed.`;
